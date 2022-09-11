@@ -16,17 +16,6 @@
 <fmt:setBundle basename="messages" var="lang"/>
 <%
     String login = (String) session.getAttribute("login");
-    Statement statement = null;
-    ResultSet resultSet1 = null;
-
-    Connection connection = DBConnection.getInstance().getConnection();
-    try {
-        if (connection != null) {
-            statement=connection.createStatement();
-        }
-    } catch (SQLException e) {
-        e.printStackTrace();
-    }
 %>
 
 <!DOCTYPE html>
@@ -143,20 +132,19 @@
         <%}%>
         <center><p>@<%=login%></p>
             <%
+                User user = null;
                 try {
-                    resultSet1 = statement.executeQuery("SELECT * FROM conferences.user where login = '"+login+"';");
-                } catch (SQLException e) {
+                    user = UserDAO.getInstance().getUser(login);
+                } catch (ClassNotFoundException e) {
                     e.printStackTrace();
-                }
-                while(resultSet1.next()){%>
-            <p><i class="fa fa-address-card"style="font-size: 20px;margin-right: 10px;" ></i> <%=resultSet1.getString("name")%></p>
-            <p><i class="fa fa-envelope" style="font-size: 20px;margin-right: 10px;"></i> <%=resultSet1.getString("email")%></p>
-            <p><i class="fa fa-money" style="font-size: 20px;margin-right: 10px;"></i><fmt:message key="account.account" bundle="${lang}"/> <%=resultSet1.getString("account")%></p>
+                }%>
+            <p><i class="fa fa-address-card"style="font-size: 20px;margin-right: 10px;" ></i> <%=user.getName()%></p>
+            <p><i class="fa fa-envelope" style="font-size: 20px;margin-right: 10px;"></i> <%=user.getEmail()%></p>
+            <p><i class="fa fa-money" style="font-size: 20px;margin-right: 10px;"></i><fmt:message key="account.account" bundle="${lang}"/> <%=user.getAccount()%></p>
             <form action="account" method="post">
                 <input type="number" style="font-size:15px; width: 80px" name="top-up_amount">
                 <input type="submit" value="<fmt:message key="account.deposit" bundle="${lang}"/>">
             </form>
-            <%}%>
         </center>
         <br>
         <%if(loginSession != null && roleSession.equalsIgnoreCase("moderator")) {%>
