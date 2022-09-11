@@ -232,7 +232,7 @@
                             <%if (currentTime.getDate() == event.getTimestamp().getDate() && currentTime.getTime() >= event.getTimestamp().getTime()){%>
                                 <a href="ChangeParticipate?id=<%=event.getId()%>&user_login=<%=loginSession%>"><button type="button" class="button" id="joinButton"><i class="fa-solid fa-arrow-right-to-bracket" style="font-size:20px; color: aliceblue"></i></button></a>
                             <%}else{%>
-                                <a href="deleteMember.jsp?id=<%=event.getId()%>&user_login=<%=loginSession%>&amount=<%=event.getAmount()%>"><button type="button" class="button" id="timesButton"><i class="fa fa-times" style="font-size:20px; color: aliceblue"></i></button></a>
+                                <a href="deleteMember?id=<%=event.getId()%>&user_login=<%=loginSession%>&amount=<%=event.getAmount()%>"><button type="button" class="button" id="timesButton"><i class="fa fa-times" style="font-size:20px; color: aliceblue"></i></button></a>
                             <%}%>
                         <%}else{%>
                             <a href="ParticipateServlet?id=<%=event.getId()%>&user_login=<%=loginSession%>&amount=<%=event.getAmount()%>"><button type="button" class="button" id="checkButton"><i class="fa fa-check" style="font-size:20px; color: aliceblue"></i></button></a>
